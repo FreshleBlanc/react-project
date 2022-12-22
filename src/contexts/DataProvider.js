@@ -52,7 +52,7 @@ export const DataProvider = function (props) {
             `)
         const data = await response.json()
         return data */
-        const docRef = doc(db, 'users', 'posts', id, uid)
+        const docRef = doc(db, 'users', uid, 'posts', id)
         const docSnap = await getDoc(docRef)
 
         const userData = await getDoc(docSnap.ref.parent.parent)
@@ -62,7 +62,7 @@ export const DataProvider = function (props) {
             return {
                 id: docSnap.id,
                 uid: uid,
-
+                username: username,
                 ...docSnap.data()
             }
         }else (
