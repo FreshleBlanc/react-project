@@ -9,12 +9,15 @@ import { useState, useEffect, useContext } from "react";
 export default function Cars(props) {
     const[cars, setCar] = useState({})
     const [loadState, setLoadState] = useState("LOADING")
-    const {fetchCar} = useContext(DataContext)
+    const {fetchCar, addCar} = useContext(DataContext)
+
 
     async function handleFetchCars() {
         const data = await fetchCar()
         setCar(data)
         setLoadState("LOADED")
+
+        
     }
   
     useEffect(() => {
@@ -55,6 +58,9 @@ export default function Cars(props) {
     }
     else {
         temp = cars.map(car => <CarDisplay key={car.id} item={car} />)
+
+        cars.map(car => addCar(car))
+
     }
 
     
