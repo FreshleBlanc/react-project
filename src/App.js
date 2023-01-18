@@ -7,7 +7,9 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Pokemon from './components/pokemon';
 import Blog from './views/Blog';
+import Cars from './components/Cars';
 import BlogSingle from './views/BlogSingle'
+import CarSingle from './views/CarSingle'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AuthContext } from './contexts/AuthProvider';
 
@@ -43,6 +45,8 @@ export default function App() {
             <li><Link to="/blog">Blog</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/pokemon">Pokemon</Link></li>
+            <li><Link to="/cars">Cars</Link></li>
+            
             {
               (user.loggedIn)?
             
@@ -56,12 +60,23 @@ export default function App() {
           <Route path="/counter" element={<Counter />} />
           <Route path="/students" element={<Students />} />
           <Route path="/about" element={<About />} />
-          <Route path="/blog">
+          
+         <Route path="/blog">
             <Route path=":uid">
               <Route path=":id" element={<BlogSingle />} />
             </Route>
             <Route path="" element={<Blog />} />
           </Route>
+           
+
+          <Route path="/cars">
+            
+              <Route path=":id" element={<CarSingle />} />
+            
+            <Route path="" element={<Cars />} />
+          </Route>
+          
+
           <Route path="/contact" element={<Contact />} />
           <Route path="/pokemon" element={<Pokemon />} />
         </Routes>

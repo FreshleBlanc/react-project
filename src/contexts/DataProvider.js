@@ -97,12 +97,18 @@ export const DataProvider = function (props) {
         return data
     }
 
+    async function fetchCar(){
+        const response = await fetch(`https://my-json-server.typicode.com/Llang8/cars-api/cars`)
+        const data = await response.json()
+        return data
+    }
 
     const value = {
         posts,
         loadPost,
         fetchPokemon,
-        addPost
+        addPost,
+        fetchCar
     }
 
     return (
