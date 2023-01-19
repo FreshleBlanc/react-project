@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext, useTransition } from "react";
-import { getFirestore, collectionGroup, getDocs, collection, doc, getDoc, Timestamp, addDoc, orderBy, query, setDoc } from '@firebase/firestore'
+import { getFirestore, collectionGroup, getDocs, collection, doc, getDoc, Timestamp, addDoc, orderBy, query, setDoc } from '@firebase/firestore';
 import { AuthContext } from "./AuthProvider";
 
 
@@ -89,27 +89,30 @@ export const DataProvider = function (props) {
         setPosts([newPost, ...posts])
     }
 
-    async function addCar(vehicle) {
+    async function addCarsFromAPI() {
+        let cars = await fetchCar()
+        console.log(cars)
+        for (let car of cars) {
         const newCar = {
-            id: vehicle.id,
-            name: vehicle.name,
-            year: vehicle.year,
-            selling_price: vehicle.selling_price,
-            km_driven: vehicle.km_driven,
-            fuel: vehicle.fuel,
-            seller_type: vehicle.seller_type,
-            transmission: vehicle.transmission,
-            owner: vehicle.owner,
-            mileage: vehicle.mileage,
-            engine: vehicle.engine,
-            max_power: vehicle.max_power,
-            torque: vehicle.torque,
-            seats: vehicle.seats
+            id: car.id,
+            name: car.name,
+            year: car.year,
+            selling_price: car.selling_price,
+            km_driven: car.km_driven,
+            fuel: car.fuel,
+            seller_type: car.seller_type,
+            transmission: car.transmission,
+            owner: car.owner,
+            mileage: car.mileage,
+            engine: car.engine,
+            max_power: car.max_power,
+            torque: car.torque,
+            seats: car.seats
         }
         
 
         const doc = await addDoc(collection(db, 'Cars'), newCar)
-        
+        }
     }
 
     
@@ -122,10 +125,50 @@ export const DataProvider = function (props) {
     }
 
     async function fetchCar() {
-        const response = await fetch(`https://my-json-server.typicode.com/Llang8/cars-api/cars`)
-        const data = await response.json()
-        return data
+        
+        const docRef = collection(db, 'Cars')
+        console.log(docRef,'this one')
+       
+        // const docSnap = await getDocs(docRef)
+
+        const snapshot = await docRef.get();
+        console.log('this two', snapshot)
+
+        // snapshot.forEach(doc => {
+        //     console.log(doc.id, '=>', doc.data());
+        // });
+        
+        
+        // getDoc(doc(db, 'Cars')).then(docSnap => {
+        //     if (docSnap.exists()){
+        //         console.log("Document data:", docSnap.data());
+        //     } 
+        //     else {
+        //         console.log("no Such Document");
+        //     }
+        // })
     }
+        // const response = await fetch(`https://my-json-server.typicode.com/Llang8/cars-api/cars`)
+        // const data = await response.json()
+
+//         if (docSnap.exists())  {
+//             // use the docsnap data to set cars
+
+//             console.log(docSnap.data())
+
+//             return {
+//                 // docSnap.data()
+//                 // id: docSnap.id,
+//                 // : uid,
+//                 // username: username,
+//                 // ...docSnap.data()
+//             }
+//         } else {
+//             console.log(`Post with id  does not exist`)
+
+       
+//     }
+// }
 
     const value = {
         posts,
@@ -133,7 +176,7 @@ export const DataProvider = function (props) {
         fetchPokemon,
         addPost,
         fetchCar,
-        addCar
+        addCarsFromAPI
     }
 
     return (

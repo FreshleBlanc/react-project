@@ -9,7 +9,7 @@ import { useState, useEffect, useContext } from "react";
 export default function Cars(props) {
     const[cars, setCar] = useState({})
     const [loadState, setLoadState] = useState("LOADING")
-    const {fetchCar, addCar} = useContext(DataContext)
+    const {fetchCar, addCarsFromAPI} = useContext(DataContext)
 
 
     async function handleFetchCars() {
@@ -33,6 +33,10 @@ export default function Cars(props) {
         console.log ('hello world')
         
         
+        function handleClick(event){
+            addCarsFromAPI()
+        }
+
 
         return(
             
@@ -44,6 +48,8 @@ export default function Cars(props) {
                
                 { item.name }
                 
+                <button onClick={handleClick}> Bulk Firebase </button>
+
                 {/* <p>{ props.post.body }</p>
                 <p className="author">Posted By: { props.post.username }</p> */}
             </div>
@@ -57,9 +63,8 @@ export default function Cars(props) {
         temp = "loading..." 
     }
     else {
-        temp = cars.map(car => <CarDisplay key={car.id} item={car} />)
+       // temp = cars.map(car => <CarDisplay key={car.id} item={car} />)
 
-        cars.map(car => addCar(car))
 
     }
 
